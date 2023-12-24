@@ -25,7 +25,7 @@ export const Message = ({ message }) => {
           }
           alt=""
         />
-        <span>Just now</span>
+        <span>{new Date(message.date?.seconds * 1000).toUTCString()}</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
