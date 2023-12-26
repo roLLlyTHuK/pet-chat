@@ -1,32 +1,35 @@
 import React, { useContext, useState } from 'react';
-import Img from '../images/img.png';
-import Attach from '../images/attach.png';
-import { ChatContext } from '../context/ChatContext';
+import Img from '../img/img.png';
+import Attach from '../img/attach.png';
 import { AuthContext } from '../context/AuthContext';
+import { ChatContext } from '../context/ChatContext';
 import {
   arrayUnion,
   doc,
-  updateDoc,
-  Timestamp,
   serverTimestamp,
+  Timestamp,
+  updateDoc,
 } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { v4 as uuid } from 'uuid';
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
 
-export const Input = () => {
+const Input = () => {
   const [text, setText] = useState('');
   const [img, setImg] = useState(null);
+
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
 
   const handleSend = async () => {
     if (img) {
       const storageRef = ref(storage, uuid());
+
       const uploadTask = uploadBytesResumable(storageRef, img);
+
       uploadTask.on(
         error => {
-          // setError(true);
+          //TODO:Handle Error
         },
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async downloadURL => {
@@ -52,6 +55,7 @@ export const Input = () => {
         }),
       });
     }
+
     await updateDoc(doc(db, 'userChats', currentUser.uid), {
       [data.chatId + '.lastMessage']: {
         text,
@@ -69,9 +73,8 @@ export const Input = () => {
     setText('');
     setImg(null);
   };
-
   return (
-    <form className="input" onSubmit={e => e.preventDefault()}>
+    <div className="input">
       <input
         type="text"
         placeholder="Type something..."
@@ -91,6 +94,8 @@ export const Input = () => {
         </label>
         <button onClick={handleSend}>Send</button>
       </div>
-    </form>
+    </div>
   );
 };
+
+export default Input;

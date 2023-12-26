@@ -1,37 +1,37 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   collection,
   query,
   where,
   getDocs,
-  doc,
-  getDoc,
   setDoc,
+  doc,
   updateDoc,
   serverTimestamp,
+  getDoc,
 } from 'firebase/firestore';
 import { db } from '../firebase';
 import { AuthContext } from '../context/AuthContext';
-
-export const Search = () => {
+const Search = () => {
   const [username, setUsername] = useState('');
   const [user, setUser] = useState(null);
-  const [error, setError] = useState(false);
+  const [err, setErr] = useState(false);
+
   const { currentUser } = useContext(AuthContext);
 
   const handleSearch = async () => {
-    const querySearch = query(
+    const q = query(
       collection(db, 'users'),
       where('displayName', '==', username)
     );
 
     try {
-      const querySnapshot = await getDocs(querySearch);
+      const querySnapshot = await getDocs(q);
       querySnapshot.forEach(doc => {
         setUser(doc.data());
       });
-    } catch (error) {
-      setError(true);
+    } catch (err) {
+      setErr(true);
     }
   };
 
@@ -40,17 +40,19 @@ export const Search = () => {
   };
 
   const handleSelect = async () => {
+    //check whether the group(chats in firestore) exists, if not create
     const combinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
-
     try {
-      const response = await getDoc(doc(db, 'chats', combinedId));
+      const res = await getDoc(doc(db, 'chats', combinedId));
 
-      if (!response.exists()) {
+      if (!res.exists()) {
+        //create a chat in chats collection
         await setDoc(doc(db, 'chats', combinedId), { messages: [] });
 
+        //create user chats
         await updateDoc(doc(db, 'userChats', currentUser.uid), {
           [combinedId + '.userInfo']: {
             uid: user.uid,
@@ -69,13 +71,11 @@ export const Search = () => {
           [combinedId + '.date']: serverTimestamp(),
         });
       }
-    } catch (error) {
-      setError(true);
-    }
+    } catch (err) {}
+
     setUser(null);
     setUsername('');
   };
-
   return (
     <div className="search">
       <div className="searchForm">
@@ -87,15 +87,17 @@ export const Search = () => {
           value={username}
         />
       </div>
-      {error && <span>User not found</span>}
+      {err && <span>User not found!</span>}
       {user && (
         <div className="userChat" onClick={handleSelect}>
           <img src={user.photoURL} alt="" />
           <div className="userChatInfo">
-            <span>{user?.displayName}</span>
+            <span>{user.displayName}</span>
           </div>
         </div>
       )}
     </div>
   );
 };
+
+export default Search;

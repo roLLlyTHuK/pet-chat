@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useRef } from 'react';
 import { AuthContext } from '../context/AuthContext';
-import { ChatContext } from 'context/ChatContext';
+import { ChatContext } from '../context/ChatContext';
 
-export const Message = ({ message }) => {
+const Message = ({ message }) => {
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext);
+
   const ref = useRef();
 
   useEffect(() => {
@@ -14,7 +15,7 @@ export const Message = ({ message }) => {
   return (
     <div
       ref={ref}
-      className={` message ${message.senderId === currentUser.uid && 'owner'}`}
+      className={`message ${message.senderId === currentUser.uid && 'owner'}`}
     >
       <div className="messageInfo">
         <img
@@ -25,7 +26,7 @@ export const Message = ({ message }) => {
           }
           alt=""
         />
-        <span>{new Date(message.date?.seconds * 1000).toUTCString()}</span>
+        <span>just now</span>
       </div>
       <div className="messageContent">
         <p>{message.text}</p>
@@ -34,3 +35,5 @@ export const Message = ({ message }) => {
     </div>
   );
 };
+
+export default Message;

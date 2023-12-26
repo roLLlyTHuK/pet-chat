@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useContext } from 'react';
 import { doc, onSnapshot } from 'firebase/firestore';
-import { db } from '../firebase';
+import React, { useContext, useEffect, useState } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
+import { db } from '../firebase';
 
-export const Chats = () => {
+const Chats = () => {
   const [chats, setChats] = useState([]);
+
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
-  console.log('currentUser :>> ', currentUser);
+
   useEffect(() => {
     const getChats = () => {
       const unsub = onSnapshot(doc(db, 'userChats', currentUser.uid), doc => {
@@ -23,10 +24,10 @@ export const Chats = () => {
     currentUser.uid && getChats();
   }, [currentUser.uid]);
 
-  const handleSelect = userChat => {
-    dispatch({ type: 'CHANGE_USER', payload: userChat });
+  const handleSelect = u => {
+    dispatch({ type: 'CHANGE_USER', payload: u });
   };
-  console.log('chats :>> ', chats);
+
   return (
     <div className="chats">
       {Object.entries(chats)
@@ -47,3 +48,5 @@ export const Chats = () => {
     </div>
   );
 };
+
+export default Chats;

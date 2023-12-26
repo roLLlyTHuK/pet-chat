@@ -1,26 +1,22 @@
 import React, { useContext } from 'react';
-import camera from '../images/camera.png';
-import add from '../images/add.png';
-import more from '../images/more.png';
-import { Messages } from './Messages';
-import { Input } from './Input';
+import Cam from '../img/cam.png';
+import Add from '../img/add.png';
+import More from '../img/more.png';
+import Messages from './Messages';
+import Input from './Input';
 import { ChatContext } from '../context/ChatContext';
 
-export const Chat = () => {
+const Chat = () => {
   const { data } = useContext(ChatContext);
-  console.log('data :>> ', data);
+
   return (
     <div className="chat">
       <div className="chatInfo">
+        <span>{data.user?.displayName}</span>
         <div className="chatIcons">
-          <img src={data.user?.photoURL} alt="" />
-          <span>{data.user?.displayName}</span>
-        </div>
-
-        <div className="chatIcons">
-          <img src={camera} alt="camera" />
-          <img src={add} alt="add" />
-          <img src={more} alt="more" />
+          <img src={Cam} alt="" />
+          <img src={Add} alt="" />
+          <img src={More} alt="" />
         </div>
       </div>
       <Messages />
@@ -28,3 +24,5 @@ export const Chat = () => {
     </div>
   );
 };
+
+export default Chat;

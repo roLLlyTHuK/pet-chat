@@ -1,9 +1,9 @@
 import React from 'react';
-import { Navbar } from './Navbar';
-import { Search } from './Search';
-import { Chats } from './Chats';
+import Navbar from './Navbar';
+import Search from './Search';
+import Chats from './Chats';
 
-export const Sidebar = () => {
+const Sidebar = () => {
   return (
     <div className="sidebar">
       <Navbar />
@@ -12,3 +12,5 @@ export const Sidebar = () => {
     </div>
   );
 };
+
+export default Sidebar;
