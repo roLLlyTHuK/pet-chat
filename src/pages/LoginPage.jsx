@@ -1,7 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { auth } from '../firebase';
-import { signInWithEmailAndPassword } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  // GoogleAuthProvider,
+  // signInWithPopup,
+  // updateProfile,
+} from 'firebase/auth';
+// import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+// import { doc, setDoc } from 'firebase/firestore';
 
 export const Login = () => {
   const [error, setError] = useState(false);
@@ -20,6 +27,34 @@ export const Login = () => {
     }
   };
 
+  // const handleGoogle = () => {
+  //   const provider = new GoogleAuthProvider();
+
+  //   signInWithPopup(auth, provider).then(response => {
+  //     const displayName = response.user.displayName;
+  //     const email = response.user.email;
+  //     const storageRef = ref(storage, response.displayName);
+  //     const uploadTask = uploadBytesResumable(storageRef, response.photoURL);
+
+  //     uploadTask.on(() => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then(async downloadURL => {
+  //         await updateProfile(response.user, {
+  //           displayName,
+  //           photoURL: downloadURL,
+  //         });
+  //         await setDoc(doc(db, 'users', response.user.uid), {
+  //           uid: response.user.uid,
+  //           displayName,
+  //           email,
+  //           photoURL: downloadURL,
+  //         });
+  //         await setDoc(doc(db, 'userChats', response.user.uid), {});
+  //       });
+  //     });
+  //     navigate('/');
+  //   });
+  // };
+
   return (
     <div className="formContainer">
       <div className="formWrapper">
@@ -31,6 +66,7 @@ export const Login = () => {
           <button>Sign in</button>
           {error && <span>Something went wrong</span>}
         </form>
+        {/* <button onClick={handleGoogle}>Sign in with Google</button> */}
         <p>
           You don't have an account? <Link to="/register">Register</Link>{' '}
         </p>
