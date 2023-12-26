@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/pet-chat/static/css/main.b1500a80.css",
-    "main.js": "/pet-chat/static/js/main.10e4c619.js",
+    "main.css": "/pet-chat/static/css/main.0e48457f.css",
+    "main.js": "/pet-chat/static/js/main.2c02fd73.js",
     "index.html": "/pet-chat/index.html",
-    "main.b1500a80.css.map": "/pet-chat/static/css/main.b1500a80.css.map",
-    "main.10e4c619.js.map": "/pet-chat/static/js/main.10e4c619.js.map"
+    "main.0e48457f.css.map": "/pet-chat/static/css/main.0e48457f.css.map",
+    "main.2c02fd73.js.map": "/pet-chat/static/js/main.2c02fd73.js.map"
   },
   "entrypoints": [
-    "static/css/main.b1500a80.css",
-    "static/js/main.10e4c619.js"
+    "static/css/main.0e48457f.css",
+    "static/js/main.2c02fd73.js"
   ]
 }
