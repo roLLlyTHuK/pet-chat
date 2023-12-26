@@ -71,7 +71,7 @@ export const Input = () => {
   };
 
   return (
-    <div className="input">
+    <form className="input" onSubmit={e => e.preventDefault()}>
       <input
         type="text"
         placeholder="Type something..."
@@ -91,6 +91,6 @@ export const Input = () => {
         </label>
         <button onClick={handleSend}>Send</button>
       </div>
-    </div>
+    </form>
   );
 };

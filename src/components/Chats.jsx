@@ -23,7 +23,7 @@ export const Chats = () => {
     currentUser.uid && getChats();
   }, [currentUser.uid]);
 
-  const handleSelect = async userChat => {
+  const handleSelect = userChat => {
     dispatch({ type: 'CHANGE_USER', payload: userChat });
   };
   console.log('chats :>> ', chats);
