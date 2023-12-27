@@ -10,7 +10,7 @@ root.render(
   <AuthContextProvider>
     <ChatContextProvider>
       <React.StrictMode>
-        <BrowserRouter basename="/pet-chat">
+                <BrowserRouter basename={process.env.PUBLIC_URL}>
           <App />
         </BrowserRouter>
       </React.StrictMode>
